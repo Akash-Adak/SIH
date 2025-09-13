@@ -15,13 +15,13 @@ public class UserKafkaProducerService {
         System.out.println("📩message sent: " + messageJson);
     }
 
-    public void sendUserotp(String topic, String messageJson) {
-        kafkaTemplate.send(topic, messageJson);
-        System.out.println("📩message sent: " + messageJson);
-    }
-
-
-    public void sendLoginSuccess(String topic, String json) {
-        kafkaTemplate.send(topic,json);
-    }
+//    public void sendUserotp(String topic, String messageJson) {
+//        kafkaTemplate.send(topic, messageJson);
+//        System.out.println("📩message sent: " + messageJson);
+//    }
+//
+//
+//    public void sendLoginSuccess(String topic, String json) {
+//        kafkaTemplate.send(topic,json);
+//    }
 }

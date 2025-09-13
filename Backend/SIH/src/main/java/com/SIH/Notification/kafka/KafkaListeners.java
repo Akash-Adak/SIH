@@ -21,6 +21,11 @@ public class KafkaListeners {
         handler.processUserOtp(message);
     }
 
+    @KafkaListener(topics = "complaint", groupId = "notification-group")
+    public void userComplaint(String message) {
+        handler.processComplaintDetails(message);
+    }
+
 //    @KafkaListener(topics = "banking-account", groupId = "notification-group")
 //    public void accountCreated(String message) {
 //        handler.processAccountCreated(message);

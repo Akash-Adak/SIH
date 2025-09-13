@@ -25,4 +25,10 @@ public class NotificationService {
         emailService.sendEmail(event.getEmail(),event.getUsername(),event.getBody());
     }
 
+    public void processComplaintDetails(String message) {
+        UserRegisteredEvent event = new Gson().fromJson(message, UserRegisteredEvent.class);
+
+        emailService.sendEmail(event.getEmail(),event.getUsername(),event.getBody());
+    }
+
 }
