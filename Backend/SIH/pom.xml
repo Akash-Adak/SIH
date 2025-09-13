@@ -11,7 +11,7 @@
 	<groupId>com.SIH</groupId>
 	<artifactId>SIH</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>SIIH-BACKEND</name>
+	<name>SIH-BACKEND</name>
 	<description>SIH projects</description>
 	<url/>
 	<licenses>
@@ -75,7 +75,10 @@
 			<version>${jjwt.version}</version>
 			<scope>runtime</scope>
 		</dependency>
-
+		<dependency>
+			<groupId>org.springframework.kafka</groupId>
+			<artifactId>spring-kafka</artifactId>
+		</dependency>
 		<!-- Database Drivers -->
 		<dependency>
 			<groupId>com.mysql</groupId>
