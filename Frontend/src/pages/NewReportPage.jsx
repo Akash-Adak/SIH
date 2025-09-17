@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { fileComplaint } from '../services/api'; // Import from our service file
+import { fileComplaint } from '../services/api';
+import { saveReportOffline } from '../services/db';
 
 export default function NewReportPage() {
   const [formData, setFormData] = useState({
@@ -21,20 +22,53 @@ export default function NewReportPage() {
     setError('');
     setSuccess('');
 
+    const reportData = { ...formData };
+
     if (!formData.title || !formData.description || !formData.category) {
       setError('All fields are required.');
       return;
     }
 
-    try {
-      const response = await fileComplaint(formData.title, formData.description, formData.category);
-      setSuccess(`Report filed successfully! Your report ID is: ${response.data.id}`);
-      // Clear form after submission
-      setFormData({ title: '', description: '', category: '' });
-      // Optionally redirect after a few seconds
-      setTimeout(() => navigate('/dashboard'), 2000);
-    } catch (err) {
-      setError(err.response?.data?.message || 'Failed to file report. Please try again.');
+    if (navigator.onLine) {
+      // --- ONLINE LOGIC ---
+      try {
+        const response = await fileComplaint(
+          reportData.title,
+          reportData.description,
+          reportData.category
+        );
+        setSuccess(
+          `Report filed successfully online! Your report ID is: ${response.data.id}`
+        );
+        setFormData({ title: "", description: "", category: "" });
+        // Optionally redirect after a few seconds
+        setTimeout(() => navigate("/dashboard"), 2000);
+      } catch (err) {
+        setError(
+          err.response?.data?.message ||
+            "Failed to file report. Please try again."
+        );
+      }
+    } else {
+      // --- OFFLINE LOGIC ---
+      try {
+        await saveReportOffline(reportData);
+        setSuccess(
+          "You are offline. Report saved locally and will be synced automatically when you are back online."
+        );
+        setFormData({ title: "", description: "", category: "" });
+
+        // Request a background sync
+        if ("serviceWorker" in navigator && "SyncManager" in window) {
+          navigator.serviceWorker.ready.then((sw) => {
+            sw.sync.register("sync-new-reports");
+          });
+        }
+      } catch (err) {
+        setError(
+          "Could not save report locally. Please check your browser permissions."
+        );
+      }
     }
   };
 

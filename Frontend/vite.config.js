@@ -1,7 +1,37 @@
+// vite.config.js
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import { VitePWA } from 'vite-plugin-pwa'
 
-// https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    VitePWA({
+      registerType: 'autoUpdate',
+      injectRegister: 'auto',
+      workbox: {
+        // This tells Workbox (the library Vite uses) to include our custom script
+        importScripts: ['src/sw-custom.js'],
+      },
+      // Optional: configure the manifest
+      manifest: {
+        name: 'CitizenConnect',
+        short_name: 'CitizenApp',
+        description: 'A unified platform for reporting civic and cyber issues.',
+        theme_color: '#ffffff',
+        icons: [
+          {
+            src: 'pwa-192x192.png',
+            sizes: '192x192',
+            type: 'image/png'
+          },
+          {
+            src: 'pwa-512x512.png',
+            sizes: '512x512',
+            type: 'image/png'
+          }
+        ]
+      }
+    })
+  ],
 })
