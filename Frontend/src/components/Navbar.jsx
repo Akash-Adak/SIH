@@ -35,8 +35,17 @@ export default function Navbar() {
               <>
                 {/* Placeholder for user's name */}
                 <span className="text-gray-700">Welcome!</span>
-                <Link to="/dashboard" className="text-gray-600 hover:text-blue-600">
+                <Link
+                  to="/dashboard"
+                  className="text-gray-600 hover:text-blue-600"
+                >
                   My Reports
+                </Link>
+                <Link
+                  to="/awareness"
+                  className="text-gray-600 hover:text-blue-600"
+                >
+                  Awareness Hub
                 </Link>
                 <Link
                   to="/report/new"

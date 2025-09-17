@@ -6,6 +6,8 @@ import DashboardPage from './pages/DashboardPage';
 import NewReportPage from './pages/NewReportPage';
 import ReportDetailsPage from './pages/ReportDetailsPage';
 import Navbar from './components/Navbar';
+import AwarenessHubPage from './pages/AwarenessHubPage';
+import ArticleDetailPage from './pages/ArticleDetailPage';
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/report/new" element={<NewReportPage />} />
           <Route path="/report/:id" element={<ReportDetailsPage />} />
+          <Route path="/awareness" element={<AwarenessHubPage />} />
+          <Route path="/awareness/:articleId" element={<ArticleDetailPage />} />
         </Routes>
       </main>
     </Router>
