@@ -67,4 +67,12 @@ export const getMyComplaints = () => {
   return api.get('/complaints/my');
 };
 
+/**
+ * Fetches a single complaint by its ID.
+ * Corresponds to: GET /complaints/{id}
+ */
+export const getComplaintById = (id) => {
+  return api.get(`/complaints/${id}`);
+};
+
 export default api;
