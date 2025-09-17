@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { registerUser, verifyOtp, loginUser } from '../services/api'; // Import from our new service
+import { registerUser, verifyOtp, loginUser } from '../services/api';
+import { saveTokenToDB } from '../services/db';
 
 // A simple Google Icon component
 const GoogleIcon = () => (
@@ -45,7 +46,9 @@ export default function LoginPage() {
     setError('');
     try {
       const response = await verifyOtp(formData.email, formData.otp);
-      localStorage.setItem('authToken', response.data.token);
+      const token = response.data.token;
+      localStorage.setItem('authToken', token);
+      await saveTokenToDB(token);
       navigate('/dashboard');
     } catch (err) {
       setError(err.response?.data?.message || 'Invalid OTP.');
@@ -57,7 +60,9 @@ export default function LoginPage() {
     setError('');
     try {
       const response = await loginUser(formData.email, formData.password);
-      localStorage.setItem('authToken', response.data.token);
+      const token = response.data.token;
+      localStorage.setItem('authToken', token);
+      await saveTokenToDB(token);
       navigate('/dashboard');
     } catch (err) {
       setError(err.response?.data?.message || 'Invalid credentials.');

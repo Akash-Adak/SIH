@@ -9,11 +9,7 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       injectRegister: 'auto',
-      workbox: {
-        // This tells Workbox (the library Vite uses) to include our custom script
-        importScripts: ['src/sw-custom.js'],
-      },
-      // Optional: configure the manifest
+      // configure the manifest
       manifest: {
         name: 'CitizenConnect',
         short_name: 'CitizenApp',
@@ -31,7 +27,13 @@ export default defineConfig({
             type: 'image/png'
           }
         ]
-      }
+      },
+      workbox: {
+        // This tells the plugin to import our custom script into the generated service worker.
+        // Make sure the path is correct relative to your project root.
+        globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
+        importScripts: ['src/sw-custom.js'] 
+      },
     })
   ],
 })
